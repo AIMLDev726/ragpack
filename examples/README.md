@@ -1,11 +1,11 @@
-# RAGPack Examples
+# ragpackai Examples
 
-This directory contains comprehensive examples demonstrating how to use RAGPack for various real-world applications.
+This directory contains comprehensive examples demonstrating how to use ragpackai for various real-world applications.
 
 ## 📓 Jupyter Notebooks
 
 ### [01_getting_started.ipynb](01_getting_started.ipynb)
-**Perfect for beginners!** Learn the fundamentals of RAGPack:
+**Perfect for beginners!** Learn the fundamentals of ragpackai:
 - Creating your first RAG pack from documents
 - Saving and loading packs
 - Basic querying and question answering
@@ -14,17 +14,17 @@ This directory contains comprehensive examples demonstrating how to use RAGPack 
 **What you'll build:** A company knowledge base with HR policies, API docs, and FAQs
 
 ### [02_advanced_features.ipynb](02_advanced_features.ipynb)
-**For power users.** Explore advanced RAGPack capabilities:
+**For power users.** Explore advanced ragpackai capabilities:
 - Working with different AI providers (Google, Groq, Cerebras)
 - Encryption and security features
 - Performance optimization techniques
 - Error handling and troubleshooting
 - Best practices for production use
 
-**What you'll learn:** How to optimize RAGPack for different use cases and scale
+**What you'll learn:** How to optimize ragpackai for different use cases and scale
 
 ### [03_real_world_examples.ipynb](03_real_world_examples.ipynb)
-**Production-ready examples.** See RAGPack in action for real applications:
+**Production-ready examples.** See ragpackai in action for real applications:
 - Customer support knowledge base
 - Technical documentation assistant
 - Personal knowledge management system
@@ -36,13 +36,13 @@ This directory contains comprehensive examples demonstrating how to use RAGPack 
 ## 🐍 Python Scripts
 
 ### [basic_usage.py](basic_usage.py)
-Standalone script showing core RAGPack functionality. Great for understanding the API without Jupyter.
+Standalone script showing core ragpackai functionality. Great for understanding the API without Jupyter.
 
 ### [provider_overrides.py](provider_overrides.py)
 Demonstrates how to use different AI providers at runtime without rebuilding packs.
 
 ### [encryption_example.py](encryption_example.py)
-Shows how to secure sensitive data using RAGPack's built-in encryption.
+Shows how to secure sensitive data using ragpackai's built-in encryption.
 
 ## 🖥️ Command Line Examples
 
@@ -51,9 +51,9 @@ Shell script with practical CLI usage examples for automation and scripting.
 
 ## 🚀 Quick Start
 
-1. **Install RAGPack:**
+1. **Install ragpackai:**
    ```bash
-   pip install ragpack
+   pip install ragpackai
    ```
 
 2. **Set up API keys:**
@@ -99,8 +99,8 @@ Shell script with practical CLI usage examples for automation and scripting.
 
 - Check the [main README](../README.md) for installation and setup
 - Review the [API documentation](https://AIMLDev726.readthedocs.io/)
-- Open an [issue on GitHub](https://github.com/AIMLDev726/ragpack/issues)
-- Join our [community discussions](https://github.com/AIMLDev726/ragpack/discussions)
+- Open an [issue on GitHub](https://github.com/AIMLDev726/ragpackai/issues)
+- Join our [community discussions](https://github.com/AIMLDev726/ragpackai/discussions)
 
 ## 🤝 Contributing
 

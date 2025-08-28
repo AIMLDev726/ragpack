@@ -1,5 +1,5 @@
 """
-Google embedding wrapper for RAGPack.
+Google embedding wrapper for ragpackai.
 
 Provides a convenient wrapper around Google embeddings with proper error handling
 and configuration management. Supports both Google Generative AI (API key) and Vertex AI.

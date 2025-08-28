@@ -1,5 +1,5 @@
 """
-Groq LLM wrapper for RAGPack.
+Groq LLM wrapper for ragpackai.
 
 Provides a convenient wrapper around Groq chat models with proper error handling
 and configuration management.

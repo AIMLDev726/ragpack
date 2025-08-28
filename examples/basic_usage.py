@@ -1,7 +1,7 @@
 """
-Basic RAGPack Usage Example
+Basic ragpackai Usage Example
 
-This example demonstrates the fundamental operations of RAGPack:
+This example demonstrates the fundamental operations of ragpackai:
 - Creating a pack from documents
 - Saving and loading packs
 - Querying and asking questions
@@ -10,7 +10,7 @@ This example demonstrates the fundamental operations of RAGPack:
 import os
 import tempfile
 from pathlib import Path
-from ragpack import RAGPack
+from ragpackai import ragpackai
 
 def create_sample_documents():
     """Create sample documents for demonstration."""
@@ -59,17 +59,17 @@ def create_sample_documents():
     
     doc3_path = Path(temp_dir) / "installation_guide.txt"
     doc3_path.write_text("""
-    RAGPack Installation Guide
+    ragpackai Installation Guide
     
-    To install RAGPack, follow these steps:
+    To install ragpackai, follow these steps:
     
     1. Basic Installation:
-       pip install ragpack
+       pip install ragpackai
     
     2. With Optional Providers:
-       pip install ragpack[google]     # For Google Vertex AI
-       pip install ragpack[groq]       # For Groq
-       pip install ragpack[all]        # All providers
+       pip install ragpackai[google]     # For Google Vertex AI
+       pip install ragpackai[groq]       # For Groq
+       pip install ragpackai[all]        # All providers
     
     3. Set up API Keys:
        export OPENAI_API_KEY="your-openai-key"
@@ -77,7 +77,7 @@ def create_sample_documents():
        export GROQ_API_KEY="your-groq-key"
     
     4. Verify Installation:
-       python -c "import ragpack; print(ragpack.get_version())"
+       python -c "import ragpackai; print(ragpackai.get_version())"
     
     Requirements:
     - Python 3.9 or higher
@@ -89,7 +89,7 @@ def create_sample_documents():
 
 def main():
     """Main example function."""
-    print("🚀 RAGPack Basic Usage Example")
+    print("🚀 ragpackai Basic Usage Example")
     print("=" * 50)
     
     # Step 1: Create sample documents
@@ -100,7 +100,7 @@ def main():
     # Step 2: Create a RAG pack
     print("\n📦 Creating RAG pack...")
     try:
-        pack = RAGPack.from_files(
+        pack = ragpackai.from_files(
             files=document_files,
             embed_model="openai:text-embedding-3-small",  # Default embedding model
             chunk_size=512,
@@ -137,7 +137,7 @@ def main():
     # Step 4: Load the pack
     print("\n📂 Loading RAG pack...")
     try:
-        loaded_pack = RAGPack.load(pack_path)
+        loaded_pack = ragpackai.load(pack_path)
         print("✅ Pack loaded successfully!")
         
         stats = loaded_pack.get_stats()
@@ -172,7 +172,7 @@ def main():
     print("\n🤖 Asking questions...")
     questions = [
         "What is artificial intelligence?",
-        "How do I install RAGPack?",
+        "How do I install ragpackai?",
         "What are the types of machine learning?"
     ]
     

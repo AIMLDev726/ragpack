@@ -1,16 +1,16 @@
-# RAGPack Documentation
+# ragpackai Documentation
 
-Welcome to RAGPack - the Portable Retrieval-Augmented Generation Library!
+Welcome to ragpackai - the Portable Retrieval-Augmented Generation Library!
 
-RAGPack allows you to create, save, load, and query portable RAG packs containing documents, embeddings, vectorstores, and configuration metadata in a single `.rag` file.
+ragpackai allows you to create, save, load, and query portable RAG packs containing documents, embeddings, vectorstores, and configuration metadata in a single `.rag` file.
 
 ## Quick Start
 
 ```python
-from ragpack import RAGPack
+from ragpackai import ragpackai
 
 # Create a pack from documents
-pack = RAGPack.from_files([
+pack = ragpackai.from_files([
     "docs/manual.pdf", 
     "notes.txt",
     "knowledge_base/"
@@ -20,7 +20,7 @@ pack = RAGPack.from_files([
 pack.save("my_knowledge.rag")
 
 # Load and query
-pack = RAGPack.load("my_knowledge.rag")
+pack = ragpackai.load("my_knowledge.rag")
 answer = pack.ask("What are the main features?")
 print(answer)
 ```

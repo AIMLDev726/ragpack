@@ -1,7 +1,7 @@
 """
-Cerebras LLM wrapper for RAGPack.
+Google LLM wrapper for ragpackai.
 
-Provides a convenient wrapper around Cerebras chat models with proper error handling
+Provides a convenient wrapper around Google Vertex AI chat models with proper error handling
 and configuration management.
 """
 
@@ -10,44 +10,50 @@ import os
 from ..providers import get_llm_provider, ProviderError
 
 
-class CerebrasChat:
+class GoogleChat:
     """
-    Cerebras chat model wrapper with lazy loading and error handling.
+    Google Vertex AI chat model wrapper with lazy loading and error handling.
     
-    This class provides a convenient interface to Cerebras chat models while
-    handling API key management and model configuration.
+    This class provides a convenient interface to Google Vertex AI chat models
+    with proper authentication and project configuration.
     
     Args:
-        model_name: Cerebras model name (default: "llama3.1-8b")
-        api_key: Cerebras API key (optional, will use CEREBRAS_API_KEY env var)
+        model_name: Google model name (default: "gemini-1.5-flash")
+        project: Google Cloud project ID (optional, will use GOOGLE_CLOUD_PROJECT env var)
+        location: Google Cloud location (default: "us-central1")
         temperature: Sampling temperature (default: 0.0)
         max_tokens: Maximum tokens to generate (optional)
+        credentials: Path to service account JSON file (optional)
         **kwargs: Additional arguments passed to the underlying LLM class
         
     Example:
-        >>> llm = CerebrasChat(model_name="llama3.1-70b", temperature=0.7)
+        >>> llm = GoogleChat(model_name="gemini-pro", project="my-project", temperature=0.7)
         >>> response = llm.invoke("What is the capital of France?")
     """
     
     def __init__(
         self, 
-        model_name: str = "llama3.1-8b",
-        api_key: Optional[str] = None,
+        model_name: str = "gemini-1.5-flash",
+        project: Optional[str] = None,
+        location: str = "us-central1",
         temperature: float = 0.0,
         max_tokens: Optional[int] = None,
+        credentials: Optional[str] = None,
         **kwargs
     ):
         self.model_name = model_name
-        self.api_key = api_key or os.getenv("CEREBRAS_API_KEY")
+        self.project = project or os.getenv("GOOGLE_CLOUD_PROJECT")
+        self.location = location
         self.temperature = temperature
         self.max_tokens = max_tokens
+        self.credentials = credentials
         self.kwargs = kwargs
         self._llm_instance = None
         
-        if not self.api_key:
+        if not self.project:
             raise ProviderError(
-                "Cerebras API key not found. Please set CEREBRAS_API_KEY environment variable "
-                "or pass api_key parameter."
+                "Google Cloud project not found. Please set GOOGLE_CLOUD_PROJECT environment variable "
+                "or pass project parameter."
             )
     
     @property
@@ -55,17 +61,21 @@ class CerebrasChat:
         """Lazy-loaded LLM instance."""
         if self._llm_instance is None:
             provider_kwargs = {
-                "cerebras_api_key": self.api_key,
+                "project": self.project,
+                "location": self.location,
                 "temperature": self.temperature,
             }
             
             if self.max_tokens:
-                provider_kwargs["max_tokens"] = self.max_tokens
+                provider_kwargs["max_output_tokens"] = self.max_tokens
+            
+            if self.credentials:
+                provider_kwargs["credentials"] = self.credentials
             
             provider_kwargs.update(self.kwargs)
             
             self._llm_instance = get_llm_provider(
-                provider="cerebras",
+                provider="google",
                 model_name=self.model_name,
                 **provider_kwargs
             )
@@ -111,4 +121,4 @@ class CerebrasChat:
             yield chunk.content if hasattr(chunk, 'content') else str(chunk)
     
     def __repr__(self) -> str:
-        return f"CerebrasChat(model_name='{self.model_name}', temperature={self.temperature})"
+        return f"GoogleChat(model_name='{self.model_name}', project='{self.project}', temperature={self.temperature})"

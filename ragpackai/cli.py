@@ -1,5 +1,5 @@
 """
-Command Line Interface for RAGPack.
+Command Line Interface for ragpackai.
 
 Provides command-line tools for creating, querying, and managing RAG packs.
 """
@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 from typing import List, Optional
 
-from . import RAGPack, ProviderError, StorageError, validate_rag_pack
+from . import ragpackai, ProviderError, StorageError, validate_rag_pack
 
 
 def create_command(args) -> None:
@@ -42,16 +42,16 @@ def create_command(args) -> None:
             embed_model = args.embed_model
         
         # Create pack
-        pack = RAGPack.from_files(
+        pack = ragpackai.from_files(
             files=files,
             embed_model=embed_model,
             chunk_size=args.chunk_size,
             chunk_overlap=args.chunk_overlap,
-            name=args.name or "ragpack"
+            name=args.name or "ragpackai"
         )
         
         # Save pack
-        output_path = args.output or f"{args.name or 'ragpack'}.rag"
+        output_path = args.output or f"{args.name or 'ragpackai'}.rag"
         pack.save(output_path, encrypt_key=args.encrypt_key)
         
         print(f"✓ RAG pack created: {output_path}")
@@ -79,7 +79,7 @@ def query_command(args) -> None:
             }
         
         # Load pack
-        pack = RAGPack.load(
+        pack = ragpackai.load(
             args.pack_path,
             embedding_config=embedding_config,
             decrypt_key=args.decrypt_key
@@ -127,7 +127,7 @@ def ask_command(args) -> None:
                 llm_config["temperature"] = args.temperature
         
         # Load pack
-        pack = RAGPack.load(
+        pack = ragpackai.load(
             args.pack_path,
             embedding_config=embedding_config,
             llm_config=llm_config,
@@ -197,13 +197,13 @@ def info_command(args) -> None:
 def main():
     """Main CLI entry point."""
     parser = argparse.ArgumentParser(
-        description="RAGPack - Portable Retrieval-Augmented Generation",
+        description="ragpackai - Portable Retrieval-Augmented Generation",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  ragpack create docs/ --output my_pack.rag
-  ragpack query my_pack.rag "What is this about?"
-  ragpack ask my_pack.rag "How do I install this?" --llm-provider openai --llm-model gpt-4o
+  ragpackai create docs/ --output my_pack.rag
+  ragpackai query my_pack.rag "What is this about?"
+  ragpackai ask my_pack.rag "How do I install this?" --llm-provider openai --llm-model gpt-4o
         """
     )
     

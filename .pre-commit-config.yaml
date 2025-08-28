@@ -41,7 +41,7 @@ repos:
     rev: 1.7.5
     hooks:
       - id: bandit
-        args: [-r, ragpack]
+        args: [-r, ragpackai]
         exclude: tests/
 
   - repo: local

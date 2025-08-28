@@ -1,6 +1,6 @@
 """
-Test suite for RAGPack.
+Test suite for ragpackai.
 
-This module contains tests for all RAGPack functionality including
+This module contains tests for all ragpackai functionality including
 core features, provider integrations, encryption, and error handling.
 """

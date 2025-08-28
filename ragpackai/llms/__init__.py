@@ -1,5 +1,5 @@
 """
-LLM provider wrappers for RAGPack.
+LLM provider wrappers for ragpackai.
 
 This module provides convenient wrapper classes for different LLM providers
 with consistent interfaces and lazy imports.

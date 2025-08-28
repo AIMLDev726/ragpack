@@ -1,7 +1,7 @@
 """
-Google LLM wrapper for RAGPack.
+OpenAI LLM wrapper for ragpackai.
 
-Provides a convenient wrapper around Google Vertex AI chat models with proper error handling
+Provides a convenient wrapper around OpenAI chat models with proper error handling
 and configuration management.
 """
 
@@ -10,50 +10,44 @@ import os
 from ..providers import get_llm_provider, ProviderError
 
 
-class GoogleChat:
+class OpenAIChat:
     """
-    Google Vertex AI chat model wrapper with lazy loading and error handling.
+    OpenAI chat model wrapper with lazy loading and error handling.
     
-    This class provides a convenient interface to Google Vertex AI chat models
-    with proper authentication and project configuration.
+    This class provides a convenient interface to OpenAI chat models while
+    handling API key management and model configuration.
     
     Args:
-        model_name: Google model name (default: "gemini-1.5-flash")
-        project: Google Cloud project ID (optional, will use GOOGLE_CLOUD_PROJECT env var)
-        location: Google Cloud location (default: "us-central1")
+        model_name: OpenAI model name (default: "gpt-4o-mini")
+        api_key: OpenAI API key (optional, will use OPENAI_API_KEY env var)
         temperature: Sampling temperature (default: 0.0)
         max_tokens: Maximum tokens to generate (optional)
-        credentials: Path to service account JSON file (optional)
         **kwargs: Additional arguments passed to the underlying LLM class
         
     Example:
-        >>> llm = GoogleChat(model_name="gemini-pro", project="my-project", temperature=0.7)
+        >>> llm = OpenAIChat(model_name="gpt-4o", temperature=0.7)
         >>> response = llm.invoke("What is the capital of France?")
     """
     
     def __init__(
         self, 
-        model_name: str = "gemini-1.5-flash",
-        project: Optional[str] = None,
-        location: str = "us-central1",
+        model_name: str = "gpt-4o-mini",
+        api_key: Optional[str] = None,
         temperature: float = 0.0,
         max_tokens: Optional[int] = None,
-        credentials: Optional[str] = None,
         **kwargs
     ):
         self.model_name = model_name
-        self.project = project or os.getenv("GOOGLE_CLOUD_PROJECT")
-        self.location = location
+        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         self.temperature = temperature
         self.max_tokens = max_tokens
-        self.credentials = credentials
         self.kwargs = kwargs
         self._llm_instance = None
         
-        if not self.project:
+        if not self.api_key:
             raise ProviderError(
-                "Google Cloud project not found. Please set GOOGLE_CLOUD_PROJECT environment variable "
-                "or pass project parameter."
+                "OpenAI API key not found. Please set OPENAI_API_KEY environment variable "
+                "or pass api_key parameter."
             )
     
     @property
@@ -61,21 +55,17 @@ class GoogleChat:
         """Lazy-loaded LLM instance."""
         if self._llm_instance is None:
             provider_kwargs = {
-                "project": self.project,
-                "location": self.location,
+                "openai_api_key": self.api_key,
                 "temperature": self.temperature,
             }
             
             if self.max_tokens:
-                provider_kwargs["max_output_tokens"] = self.max_tokens
-            
-            if self.credentials:
-                provider_kwargs["credentials"] = self.credentials
+                provider_kwargs["max_tokens"] = self.max_tokens
             
             provider_kwargs.update(self.kwargs)
             
             self._llm_instance = get_llm_provider(
-                provider="google",
+                provider="openai",
                 model_name=self.model_name,
                 **provider_kwargs
             )
@@ -121,4 +111,4 @@ class GoogleChat:
             yield chunk.content if hasattr(chunk, 'content') else str(chunk)
     
     def __repr__(self) -> str:
-        return f"GoogleChat(model_name='{self.model_name}', project='{self.project}', temperature={self.temperature})"
+        return f"OpenAIChat(model_name='{self.model_name}', temperature={self.temperature})"

@@ -1,7 +1,7 @@
 """
-OpenAI LLM wrapper for RAGPack.
+Cerebras LLM wrapper for ragpackai.
 
-Provides a convenient wrapper around OpenAI chat models with proper error handling
+Provides a convenient wrapper around Cerebras chat models with proper error handling
 and configuration management.
 """
 
@@ -10,35 +10,35 @@ import os
 from ..providers import get_llm_provider, ProviderError
 
 
-class OpenAIChat:
+class CerebrasChat:
     """
-    OpenAI chat model wrapper with lazy loading and error handling.
+    Cerebras chat model wrapper with lazy loading and error handling.
     
-    This class provides a convenient interface to OpenAI chat models while
+    This class provides a convenient interface to Cerebras chat models while
     handling API key management and model configuration.
     
     Args:
-        model_name: OpenAI model name (default: "gpt-4o-mini")
-        api_key: OpenAI API key (optional, will use OPENAI_API_KEY env var)
+        model_name: Cerebras model name (default: "llama3.1-8b")
+        api_key: Cerebras API key (optional, will use CEREBRAS_API_KEY env var)
         temperature: Sampling temperature (default: 0.0)
         max_tokens: Maximum tokens to generate (optional)
         **kwargs: Additional arguments passed to the underlying LLM class
         
     Example:
-        >>> llm = OpenAIChat(model_name="gpt-4o", temperature=0.7)
+        >>> llm = CerebrasChat(model_name="llama3.1-70b", temperature=0.7)
         >>> response = llm.invoke("What is the capital of France?")
     """
     
     def __init__(
         self, 
-        model_name: str = "gpt-4o-mini",
+        model_name: str = "llama3.1-8b",
         api_key: Optional[str] = None,
         temperature: float = 0.0,
         max_tokens: Optional[int] = None,
         **kwargs
     ):
         self.model_name = model_name
-        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+        self.api_key = api_key or os.getenv("CEREBRAS_API_KEY")
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.kwargs = kwargs
@@ -46,7 +46,7 @@ class OpenAIChat:
         
         if not self.api_key:
             raise ProviderError(
-                "OpenAI API key not found. Please set OPENAI_API_KEY environment variable "
+                "Cerebras API key not found. Please set CEREBRAS_API_KEY environment variable "
                 "or pass api_key parameter."
             )
     
@@ -55,7 +55,7 @@ class OpenAIChat:
         """Lazy-loaded LLM instance."""
         if self._llm_instance is None:
             provider_kwargs = {
-                "openai_api_key": self.api_key,
+                "cerebras_api_key": self.api_key,
                 "temperature": self.temperature,
             }
             
@@ -65,7 +65,7 @@ class OpenAIChat:
             provider_kwargs.update(self.kwargs)
             
             self._llm_instance = get_llm_provider(
-                provider="openai",
+                provider="cerebras",
                 model_name=self.model_name,
                 **provider_kwargs
             )
@@ -111,4 +111,4 @@ class OpenAIChat:
             yield chunk.content if hasattr(chunk, 'content') else str(chunk)
     
     def __repr__(self) -> str:
-        return f"OpenAIChat(model_name='{self.model_name}', temperature={self.temperature})"
+        return f"CerebrasChat(model_name='{self.model_name}', temperature={self.temperature})"

@@ -162,7 +162,7 @@ cython_debug/
 # VS Code
 .vscode/
 
-# RAGPack specific
+# ragpackai specific
 *.rag
 test_*.rag
 example_*.rag

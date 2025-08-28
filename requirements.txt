@@ -1,4 +1,4 @@
-# Core dependencies for RAGPack
+# Core dependencies for ragpackai
 langchain==0.2.12
 langchain-openai==0.1.20
 openai==1.40.0

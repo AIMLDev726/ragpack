@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Development Setup Script for RAGPack
+Development Setup Script for ragpackai
 
-This script helps set up a development environment for RAGPack.
+This script helps set up a development environment for ragpackai.
 """
 
 import os
@@ -60,7 +60,7 @@ def install_dependencies():
     
     commands = [
         (f"{pip_command} install --upgrade pip", "Upgrading pip"),
-        (f"{pip_command} install -e .", "Installing RAGPack in development mode"),
+        (f"{pip_command} install -e .", "Installing ragpackai in development mode"),
         (f"{pip_command} install -e .[dev]", "Installing development dependencies"),
         (f"{pip_command} install -e .[all]", "Installing all optional dependencies"),
     ]
@@ -88,7 +88,7 @@ def create_env_file():
         print("✅ .env file already exists")
         return True
     
-    env_content = """# RAGPack Development Environment Variables
+    env_content = """# ragpackai Development Environment Variables
 # Copy this file and add your actual API keys
 
 # OpenAI (required for most examples)
@@ -105,8 +105,8 @@ GROQ_API_KEY=your_groq_api_key_here
 CEREBRAS_API_KEY=your_cerebras_api_key_here
 
 # Development settings
-RAGPACK_DEBUG=true
-RAGPACK_LOG_LEVEL=DEBUG
+ragpackai_DEBUG=true
+ragpackai_LOG_LEVEL=DEBUG
 """
     
     try:
@@ -149,15 +149,15 @@ def print_next_steps():
     print(f"\n4. Run tests:")
     print(f"   pytest tests/ -v")
     print(f"\n5. Code formatting:")
-    print(f"   black ragpack tests examples")
-    print(f"   flake8 ragpack tests examples")
+    print(f"   black ragpackai tests examples")
+    print(f"   flake8 ragpackai tests examples")
     print(f"\n6. Build package:")
     print(f"   python -m build")
     print(f"\n💡 See CONTRIBUTING.md for detailed development guidelines")
 
 def main():
     """Main setup function."""
-    print("🚀 RAGPack Development Environment Setup")
+    print("🚀 ragpackai Development Environment Setup")
     print("="*50)
     
     # Check Python version

@@ -2,13 +2,13 @@
 Provider Override Example
 
 This example demonstrates how to use different embedding and LLM providers
-with RAGPack, including runtime overrides and provider switching.
+with ragpackai, including runtime overrides and provider switching.
 """
 
 import os
 import tempfile
 from pathlib import Path
-from ragpack import RAGPack
+from ragpackai import ragpackai
 
 def create_sample_documents():
     """Create sample documents for demonstration."""
@@ -16,9 +16,9 @@ def create_sample_documents():
     
     doc_path = Path(temp_dir) / "provider_guide.txt"
     doc_path.write_text("""
-    RAGPack Provider Guide
+    ragpackai Provider Guide
     
-    RAGPack supports multiple embedding and LLM providers:
+    ragpackai supports multiple embedding and LLM providers:
     
     Embedding Providers:
     - OpenAI: text-embedding-3-small, text-embedding-3-large
@@ -46,7 +46,7 @@ def demonstrate_creation_with_different_providers():
     # Example 1: OpenAI embeddings (default)
     print("\n1️⃣ Creating pack with OpenAI embeddings...")
     try:
-        pack_openai = RAGPack.from_files(
+        pack_openai = ragpackai.from_files(
             files=document_files,
             embed_model="openai:text-embedding-3-small",
             name="openai_pack"
@@ -61,7 +61,7 @@ def demonstrate_creation_with_different_providers():
     # Example 2: HuggingFace embeddings (offline)
     print("\n2️⃣ Creating pack with HuggingFace embeddings...")
     try:
-        pack_hf = RAGPack.from_files(
+        pack_hf = ragpackai.from_files(
             files=document_files,
             embed_model="huggingface:all-MiniLM-L6-v2",
             name="huggingface_pack"
@@ -76,7 +76,7 @@ def demonstrate_creation_with_different_providers():
     # Example 3: Google embeddings
     print("\n3️⃣ Creating pack with Google embeddings...")
     try:
-        pack_google = RAGPack.from_files(
+        pack_google = ragpackai.from_files(
             files=document_files,
             embed_model="google:textembedding-gecko",
             name="google_pack"
@@ -86,7 +86,7 @@ def demonstrate_creation_with_different_providers():
         
     except Exception as e:
         print(f"❌ Error with Google: {e}")
-        print("💡 Set GOOGLE_CLOUD_PROJECT and install: pip install ragpack[google]")
+        print("💡 Set GOOGLE_CLOUD_PROJECT and install: pip install ragpackai[google]")
 
 def demonstrate_runtime_overrides():
     """Show loading packs with different provider overrides."""
@@ -110,7 +110,7 @@ def demonstrate_runtime_overrides():
     # Example 1: Load with original configuration
     print("\n1️⃣ Loading with original configuration...")
     try:
-        pack_original = RAGPack.load(available_pack)
+        pack_original = ragpackai.load(available_pack)
         stats = pack_original.get_stats()
         embed_config = stats['config']['embedding']
         llm_config = stats['config']['llm']
@@ -119,7 +119,7 @@ def demonstrate_runtime_overrides():
         print(f"✅ Original LLM: {llm_config['provider']}:{llm_config['model_name']}")
         
         # Test query
-        results = pack_original.query("What providers does RAGPack support?", top_k=2)
+        results = pack_original.query("What providers does ragpackai support?", top_k=2)
         print(f"📊 Query returned {len(results)} results")
         
     except Exception as e:
@@ -129,7 +129,7 @@ def demonstrate_runtime_overrides():
     # Example 2: Override LLM provider only
     print("\n2️⃣ Loading with LLM override...")
     try:
-        pack_llm_override = RAGPack.load(
+        pack_llm_override = ragpackai.load(
             available_pack,
             llm_config={
                 "provider": "openai",
@@ -153,7 +153,7 @@ def demonstrate_runtime_overrides():
     # Example 3: Override both embedding and LLM (if dimensions match)
     print("\n3️⃣ Loading with both embedding and LLM overrides...")
     try:
-        pack_both_override = RAGPack.load(
+        pack_both_override = ragpackai.load(
             available_pack,
             embedding_config={
                 "provider": "openai",
@@ -180,7 +180,7 @@ def demonstrate_provider_specific_features():
     # HuggingFace with custom device
     print("\n1️⃣ HuggingFace with custom configuration...")
     try:
-        from ragpack.embeddings import HuggingFace
+        from ragpackai.embeddings import HuggingFace
         
         # Create HuggingFace embeddings with custom settings
         hf_embeddings = HuggingFace(
@@ -199,7 +199,7 @@ def demonstrate_provider_specific_features():
     # OpenAI with custom parameters
     print("\n2️⃣ OpenAI with custom configuration...")
     try:
-        from ragpack.llms import OpenAIChat
+        from ragpackai.llms import OpenAIChat
         
         # Create OpenAI LLM with custom settings
         openai_llm = OpenAIChat(
@@ -208,7 +208,7 @@ def demonstrate_provider_specific_features():
             max_tokens=150
         )
         
-        response = openai_llm.invoke("What is RAGPack in one sentence?")
+        response = openai_llm.invoke("What is ragpackai in one sentence?")
         print(f"✅ OpenAI response: {response}")
         
     except Exception as e:
@@ -232,7 +232,7 @@ def cleanup_example_files():
 
 def main():
     """Main example function."""
-    print("🔧 RAGPack Provider Override Example")
+    print("🔧 ragpackai Provider Override Example")
     print("=" * 50)
     
     # Check available API keys

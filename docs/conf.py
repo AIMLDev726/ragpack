@@ -10,10 +10,10 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'RAGPack'
-copyright = '2025, RAGPack Team'
-author = 'RAGPack Team'
-release = '0.1.0'
+project = 'ragpackai'
+copyright = '2025, ragpackai Team'
+author = 'ragpackai Team'
+release = '0.1.1'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

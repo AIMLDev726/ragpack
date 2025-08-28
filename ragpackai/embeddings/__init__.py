@@ -1,5 +1,5 @@
 """
-Embedding provider wrappers for RAGPack.
+Embedding provider wrappers for ragpackai.
 
 This module provides convenient wrapper classes for different embedding providers
 with consistent interfaces and lazy imports.

@@ -1,7 +1,7 @@
 """
-Core RAGPack class for portable Retrieval-Augmented Generation.
+Core ragpackai class for portable Retrieval-Augmented Generation.
 
-This module contains the main RAGPack class that provides functionality to create,
+This module contains the main ragpackai class that provides functionality to create,
 save, load, and query portable RAG packs containing documents, embeddings,
 vectorstores, and configuration metadata.
 """
@@ -33,31 +33,31 @@ from .storage import save_rag_pack, load_rag_pack, StorageError
 from .pipeline import RAGPipeline
 
 
-class RAGPack:
+class ragpackai:
     """
-    Main RAGPack class for creating and managing portable RAG packs.
+    Main ragpackai class for creating and managing portable RAG packs.
     
-    A RAGPack encapsulates documents, embeddings, vectorstore, and configuration
+    A ragpackai encapsulates documents, embeddings, vectorstore, and configuration
     into a portable .rag file that can be shared and loaded on different systems.
     
     Example:
         >>> # Create from files
-        >>> pack = RAGPack.from_files(["doc1.txt", "doc2.pdf"])
+        >>> pack = ragpackai.from_files(["doc1.txt", "doc2.pdf"])
         >>> pack.save("my_pack.rag")
         
         >>> # Load existing pack
-        >>> pack = RAGPack.load("my_pack.rag")
+        >>> pack = ragpackai.load("my_pack.rag")
         >>> answer = pack.ask("What is this about?")
     """
     
     def __init__(
         self,
-        name: str = "ragpack",
+        name: str = "ragpackai",
         metadata: Optional[Dict[str, Any]] = None,
         config: Optional[Dict[str, Any]] = None
     ):
         """
-        Initialize a new RAGPack.
+        Initialize a new ragpackai.
         
         Args:
             name: Name of the pack
@@ -80,11 +80,11 @@ class RAGPack:
         embed_model: str = "openai:text-embedding-3-small",
         chunk_size: int = 512,
         chunk_overlap: int = 50,
-        name: str = "ragpack",
+        name: str = "ragpackai",
         **kwargs
-    ) -> "RAGPack":
+    ) -> "ragpackai":
         """
-        Create a RAGPack from a list of files.
+        Create a ragpackai from a list of files.
         
         Args:
             files: List of file paths to include
@@ -95,7 +95,7 @@ class RAGPack:
             **kwargs: Additional arguments for embedding provider
             
         Returns:
-            RAGPack instance
+            ragpackai instance
             
         Raises:
             ProviderError: If embedding provider is not available
@@ -209,7 +209,7 @@ class RAGPack:
             persist_directory=vectorstore_path
         )
         
-        print(f"RAGPack '{name}' created successfully with {len(split_docs)} chunks")
+        print(f"ragpackai '{name}' created successfully with {len(split_docs)} chunks")
         return pack
     
     @classmethod
@@ -220,9 +220,9 @@ class RAGPack:
         llm_config: Optional[Dict[str, Any]] = None,
         reindex_on_mismatch: bool = False,
         decrypt_key: Optional[str] = None
-    ) -> "RAGPack":
+    ) -> "ragpackai":
         """
-        Load a RAGPack from a .rag file.
+        Load a ragpackai from a .rag file.
         
         Args:
             path: Path to the .rag file
@@ -232,7 +232,7 @@ class RAGPack:
             decrypt_key: Decryption key if pack is encrypted
             
         Returns:
-            RAGPack instance
+            ragpackai instance
             
         Raises:
             StorageError: If loading fails
@@ -303,7 +303,7 @@ class RAGPack:
                 else:
                     raise
         
-        print(f"RAGPack '{pack.name}' loaded successfully")
+        print(f"ragpackai '{pack.name}' loaded successfully")
         return pack
     
     def _reindex_vectorstore(self, embedding_config: Dict[str, Any]) -> None:
@@ -363,7 +363,7 @@ class RAGPack:
 
     def save(self, path: str, encrypt_key: Optional[str] = None) -> None:
         """
-        Save the RAGPack to a .rag file.
+        Save the ragpackai to a .rag file.
 
         Args:
             path: Path to save the .rag file
@@ -395,7 +395,7 @@ class RAGPack:
             encrypt_key=encrypt_key
         )
 
-        print(f"RAGPack saved to: {path}")
+        print(f"ragpackai saved to: {path}")
 
     def query(self, question: str, top_k: int = 3) -> List[Dict[str, Any]]:
         """
@@ -515,7 +515,7 @@ class RAGPack:
     def __repr__(self) -> str:
         doc_count = len(self.documents)
         has_vs = "✓" if self.vectorstore else "✗"
-        return f"RAGPack(name='{self.name}', docs={doc_count}, vectorstore={has_vs})"
+        return f"ragpackai(name='{self.name}', docs={doc_count}, vectorstore={has_vs})"
 
 
 

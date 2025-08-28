@@ -1,6 +1,6 @@
-# Contributing to RAGPack
+# Contributing to ragpackai
 
-We welcome contributions to RAGPack! This document provides guidelines for contributing to the project.
+We welcome contributions to ragpackai! This document provides guidelines for contributing to the project.
 
 ## Getting Started
 
@@ -15,8 +15,8 @@ We welcome contributions to RAGPack! This document provides guidelines for contr
 1. Fork the repository on GitHub
 2. Clone your fork locally:
    ```bash
-   git clone https://github.com/AIMLDev726/ragpack.git
-   cd ragpack
+   git clone https://github.com/AIMLDev726/ragpackai.git
+   cd ragpackai
    ```
 
 3. Create a virtual environment:
@@ -47,9 +47,9 @@ We use several tools to maintain code quality:
 
 Run these tools before submitting:
 ```bash
-black ragpack tests examples
-flake8 ragpack tests examples
-mypy ragpack
+black ragpackai tests examples
+flake8 ragpackai tests examples
+mypy ragpackai
 ```
 
 ### Testing
@@ -61,7 +61,7 @@ pytest
 
 Run tests with coverage:
 ```bash
-pytest --cov=ragpack --cov-report=html
+pytest --cov=ragpackai --cov-report=html
 ```
 
 ### Adding New Features
@@ -81,8 +81,8 @@ pytest --cov=ragpack --cov-report=html
 
 To add support for a new embedding or LLM provider:
 
-1. Create wrapper classes in `ragpack/embeddings/` or `ragpack/llms/`
-2. Update the provider configuration in `ragpack/providers.py`
+1. Create wrapper classes in `ragpackai/embeddings/` or `ragpackai/llms/`
+2. Update the provider configuration in `ragpackai/providers.py`
 3. Add the provider to optional dependencies in `pyproject.toml`
 4. Add tests and examples
 5. Update documentation
@@ -133,4 +133,4 @@ If you have questions about contributing, feel free to:
 - Reach out to the maintainers
 - Join our community discussions
 
-Thank you for contributing to RAGPack!
+Thank you for contributing to ragpackai!

@@ -1,5 +1,5 @@
 """
-Provider mapping and lazy loading for RAGPack.
+Provider mapping and lazy loading for ragpackai.
 
 This module handles the mapping of provider names to their corresponding
 embedding and LLM classes, with lazy imports to avoid forcing heavy
@@ -151,7 +151,7 @@ LLM_PROVIDERS = {
         "class": LazyImport(
             "langchain_groq",
             "ChatGroq",
-            "pip install ragpack[groq]"
+            "pip install ragpackai[groq]"
         ),
         "models": [
             # Groq-native
@@ -167,7 +167,7 @@ LLM_PROVIDERS = {
         "class": LazyImport(
             "langchain_cerebras",
             "ChatCerebras",
-            "pip install ragpack[cerebras]"
+            "pip install ragpackai[cerebras]"
         ),
         "models": [
             # Standard

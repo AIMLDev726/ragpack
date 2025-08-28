@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Build and Publish Script for RAGPack
+Build and Publish Script for ragpackai
 
-This script automates the process of building and publishing RAGPack to PyPI.
+This script automates the process of building and publishing ragpackai to PyPI.
 """
 
 import os
@@ -76,15 +76,15 @@ def check_version_consistency():
     pyproject_version = version_match.group(1)
     
     # Read version from __init__.py
-    init_path = Path("ragpack/__init__.py")
+    init_path = Path("ragpackai/__init__.py")
     if not init_path.exists():
-        print("❌ ragpack/__init__.py not found")
+        print("❌ ragpackai/__init__.py not found")
         return False
     
     init_content = init_path.read_text()
     init_version_match = re.search(r'__version__ = "([^"]+)"', init_content)
     if not init_version_match:
-        print("❌ Version not found in ragpack/__init__.py")
+        print("❌ Version not found in ragpackai/__init__.py")
         return False
     
     init_version = init_version_match.group(1)
@@ -99,9 +99,9 @@ def check_version_consistency():
 def run_quality_checks():
     """Run code quality checks."""
     checks = [
-        ("black --check ragpack tests examples scripts", "Code formatting check"),
-        ("flake8 ragpack tests examples scripts", "Linting check"),
-        ("mypy ragpack --ignore-missing-imports", "Type checking"),
+        ("black --check ragpackai tests examples scripts", "Code formatting check"),
+        ("flake8 ragpackai tests examples scripts", "Linting check"),
+        ("mypy ragpackai --ignore-missing-imports", "Type checking"),
     ]
     
     all_passed = True
@@ -136,7 +136,7 @@ def upload_to_pypi():
 
 def main():
     """Main build and publish function."""
-    parser = argparse.ArgumentParser(description="Build and publish RAGPack")
+    parser = argparse.ArgumentParser(description="Build and publish ragpackai")
     parser.add_argument(
         "--target", 
         choices=["build", "test-pypi", "pypi"], 
@@ -156,7 +156,7 @@ def main():
     
     args = parser.parse_args()
     
-    print("🚀 RAGPack Build and Publish Script")
+    print("🚀 ragpackai Build and Publish Script")
     print("="*50)
     print(f"Target: {args.target}")
     print(f"Skip checks: {args.skip_checks}")
@@ -209,7 +209,7 @@ def main():
             sys.exit(1)
         print("\n✅ Successfully uploaded to Test PyPI!")
         print("💡 Test installation with:")
-        print("   pip install --index-url https://test.pypi.org/simple/ ragpack")
+        print("   pip install --index-url https://test.pypi.org/simple/ ragpackai")
         
     elif args.target == "pypi":
         print("\n⚠️ WARNING: You are about to upload to the PRODUCTION PyPI!")
@@ -224,7 +224,7 @@ def main():
             sys.exit(1)
         print("\n✅ Successfully uploaded to PyPI!")
         print("💡 Install with:")
-        print("   pip install ragpack")
+        print("   pip install ragpackai")
         
     else:  # build only
         print("\n✅ Package built successfully!")

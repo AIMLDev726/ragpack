@@ -3,16 +3,16 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ragpack"
-version = "0.1.0"
+name = "ragpackai"
+version = "0.1.1"
 description = "Portable Retrieval-Augmented Generation Library"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "RAGPack Team", email = "aistudentlearn4@gmail.com"}
+    {name = "ragpackai Team", email = "aistudentlearn4@gmail.com"}
 ]
 maintainers = [
-    {name = "RAGPack Team", email = "aistudentlearn4@gmail.com"}
+    {name = "ragpackai Team", email = "aistudentlearn4@gmail.com"}
 ]
 keywords = [
     "rag", "retrieval", "augmented", "generation", "llm", "embeddings", 
@@ -82,20 +82,20 @@ dev = [
 ]
 
 [project.scripts]
-ragpack = "ragpack.cli:main"
+ragpackai = "ragpackai.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/AIMLDev726/ragpack"
+Homepage = "https://github.com/AIMLDev726/ragpackai"
 Documentation = "https://AIMLDev726.readthedocs.io/"
-Repository = "https://github.com/AIMLDev726/ragpack"
-"Bug Reports" = "https://github.com/AIMLDev726/ragpack/issues"
-Changelog = "https://github.com/AIMLDev726/ragpack/blob/main/CHANGELOG.md"
+Repository = "https://github.com/AIMLDev726/ragpackai"
+"Bug Reports" = "https://github.com/AIMLDev726/ragpackai/issues"
+Changelog = "https://github.com/AIMLDev726/ragpackai/blob/main/CHANGELOG.md"
 
 [tool.setuptools]
-packages = ["ragpack", "ragpack.embeddings", "ragpack.llms"]
+packages = ["ragpackai", "ragpackai.embeddings", "ragpackai.llms"]
 
 [tool.setuptools.package-data]
-ragpack = ["*.json", "*.yaml", "*.yml"]
+ragpackai = ["*.json", "*.yaml", "*.yml"]
 
 [tool.black]
 line-length = 88

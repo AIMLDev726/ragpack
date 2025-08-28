@@ -1,5 +1,5 @@
 """
-Tests for the core RAGPack functionality.
+Tests for the core ragpackai functionality.
 """
 
 import os
@@ -9,13 +9,13 @@ from pathlib import Path
 import pytest
 from unittest.mock import Mock, patch, MagicMock
 
-# Import RAGPack components
-from ragpack import RAGPack, ProviderError, StorageError
-from ragpack.providers import parse_model_string, get_embedding_dimensions
+# Import ragpackai components
+from ragpackai import ragpackai, ProviderError, StorageError
+from ragpackai.providers import parse_model_string, get_embedding_dimensions
 
 
-class TestRAGPack:
-    """Test cases for RAGPack core functionality."""
+class Testragpackai:
+    """Test cases for ragpackai core functionality."""
     
     def setup_method(self):
         """Set up test fixtures."""
@@ -36,8 +36,8 @@ class TestRAGPack:
         if os.path.exists(self.temp_dir):
             shutil.rmtree(self.temp_dir)
     
-    @patch('ragpack.ragpack.get_embedding_provider')
-    @patch('ragpack.ragpack.Chroma')
+    @patch('ragpackai.ragpackai.get_embedding_provider')
+    @patch('ragpackai.ragpackai.Chroma')
     def test_from_files_basic(self, mock_chroma, mock_embedding_provider):
         """Test basic pack creation from files."""
         # Mock embedding provider
@@ -49,7 +49,7 @@ class TestRAGPack:
         mock_chroma.from_documents.return_value = mock_vectorstore
         
         # Create pack
-        pack = RAGPack.from_files(
+        pack = ragpackai.from_files(
             files=self.test_files,
             embed_model="openai:text-embedding-3-small",
             name="test_pack"
@@ -70,11 +70,11 @@ class TestRAGPack:
     def test_from_files_invalid_files(self):
         """Test pack creation with invalid files."""
         with pytest.raises(ValueError, match="No documents could be loaded"):
-            RAGPack.from_files(files=["nonexistent.txt"])
+            ragpackai.from_files(files=["nonexistent.txt"])
     
-    @patch('ragpack.storage.load_rag_pack')
-    @patch('ragpack.ragpack.get_embedding_provider')
-    @patch('ragpack.ragpack.Chroma')
+    @patch('ragpackai.storage.load_rag_pack')
+    @patch('ragpackai.ragpackai.get_embedding_provider')
+    @patch('ragpackai.ragpackai.Chroma')
     def test_load_basic(self, mock_chroma, mock_embedding_provider, mock_load_rag_pack):
         """Test basic pack loading."""
         # Mock load_rag_pack return
@@ -104,7 +104,7 @@ class TestRAGPack:
         mock_chroma.return_value = mock_vectorstore
         
         # Load pack
-        pack = RAGPack.load("test.rag")
+        pack = ragpackai.load("test.rag")
         
         # Assertions
         assert pack.name == "test_pack"
@@ -117,11 +117,11 @@ class TestRAGPack:
         mock_embedding_provider.assert_called_once()
         mock_chroma.assert_called_once()
     
-    @patch('ragpack.storage.save_rag_pack')
+    @patch('ragpackai.storage.save_rag_pack')
     def test_save_basic(self, mock_save_rag_pack):
         """Test basic pack saving."""
         # Create a mock pack
-        pack = RAGPack(name="test_pack")
+        pack = ragpackai(name="test_pack")
         pack.documents = [{"filename": "test.txt", "content": "test"}]
         
         # Mock vectorstore
@@ -144,16 +144,16 @@ class TestRAGPack:
     
     def test_save_without_vectorstore(self):
         """Test saving pack without vectorstore raises error."""
-        pack = RAGPack(name="test_pack")
+        pack = ragpackai(name="test_pack")
         
         with pytest.raises(ValueError, match="No vectorstore available"):
             pack.save("test.rag")
     
-    @patch('ragpack.pipeline.RAGPipeline')
+    @patch('ragpackai.pipeline.RAGPipeline')
     def test_query(self, mock_pipeline_class):
         """Test pack querying."""
         # Create pack with mock vectorstore
-        pack = RAGPack(name="test_pack")
+        pack = ragpackai(name="test_pack")
         pack.vectorstore = Mock()
         pack.config = {"llm": {"provider": "openai", "model_name": "gpt-4o-mini"}}
         
@@ -175,11 +175,11 @@ class TestRAGPack:
         mock_pipeline_class.assert_called_once()
         mock_pipeline.retrieve.assert_called_once_with("test question", top_k=3)
     
-    @patch('ragpack.pipeline.RAGPipeline')
+    @patch('ragpackai.pipeline.RAGPipeline')
     def test_ask(self, mock_pipeline_class):
         """Test pack question answering."""
         # Create pack with mock vectorstore
-        pack = RAGPack(name="test_pack")
+        pack = ragpackai(name="test_pack")
         pack.vectorstore = Mock()
         pack.config = {"llm": {"provider": "openai", "model_name": "gpt-4o-mini"}}
         
@@ -204,21 +204,21 @@ class TestRAGPack:
     
     def test_query_without_vectorstore(self):
         """Test querying without vectorstore raises error."""
-        pack = RAGPack(name="test_pack")
+        pack = ragpackai(name="test_pack")
         
         with pytest.raises(ValueError, match="No vectorstore available"):
             pack.query("test question")
     
     def test_ask_without_vectorstore(self):
         """Test asking without vectorstore raises error."""
-        pack = RAGPack(name="test_pack")
+        pack = ragpackai(name="test_pack")
         
         with pytest.raises(ValueError, match="No vectorstore available"):
             pack.ask("test question")
     
     def test_ask_without_llm_config(self):
         """Test asking without LLM config raises error."""
-        pack = RAGPack(name="test_pack")
+        pack = ragpackai(name="test_pack")
         pack.vectorstore = Mock()
         pack.config = {}
         
@@ -227,7 +227,7 @@ class TestRAGPack:
     
     def test_update_llm_config(self):
         """Test updating LLM configuration."""
-        pack = RAGPack(name="test_pack")
+        pack = ragpackai(name="test_pack")
         pack.config = {"llm": {"provider": "openai", "model_name": "gpt-4o-mini"}}
         
         new_config = {"provider": "google", "model_name": "gemini-pro"}
@@ -237,7 +237,7 @@ class TestRAGPack:
     
     def test_get_stats(self):
         """Test getting pack statistics."""
-        pack = RAGPack(name="test_pack")
+        pack = ragpackai(name="test_pack")
         pack.documents = [{"filename": "test.txt"}]
         pack.vectorstore = Mock()
         
@@ -250,7 +250,7 @@ class TestRAGPack:
     
     def test_repr(self):
         """Test pack string representation."""
-        pack = RAGPack(name="test_pack")
+        pack = ragpackai(name="test_pack")
         pack.documents = [{"filename": "test.txt"}]
         pack.vectorstore = Mock()
         

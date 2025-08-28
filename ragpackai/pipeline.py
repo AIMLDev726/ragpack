@@ -1,5 +1,5 @@
 """
-Pipeline module for RAGPack.
+Pipeline module for ragpackai.
 
 Handles retrieval + LLM chaining for question answering with proper
 integration of vectorstore and LLM components.

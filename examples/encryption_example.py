@@ -1,7 +1,7 @@
 """
 Encryption Example
 
-This example demonstrates how to use RAGPack's encryption features
+This example demonstrates how to use ragpackai's encryption features
 to protect sensitive data in .rag files.
 """
 
@@ -9,7 +9,7 @@ import os
 import tempfile
 import getpass
 from pathlib import Path
-from ragpack import RAGPack, EncryptionError
+from ragpackai import ragpackai, EncryptionError
 
 def create_sensitive_documents():
     """Create sample sensitive documents."""
@@ -72,7 +72,7 @@ def demonstrate_basic_encryption():
     # Create RAG pack
     print("📦 Creating RAG pack with sensitive data...")
     try:
-        pack = RAGPack.from_files(
+        pack = ragpackai.from_files(
             files=document_files,
             embed_model="openai:text-embedding-3-small",
             name="confidential_pack"
@@ -117,7 +117,7 @@ def demonstrate_encrypted_loading():
     # Try loading without password (should fail)
     print("1️⃣ Attempting to load without password...")
     try:
-        pack = RAGPack.load(encrypted_pack_path)
+        pack = ragpackai.load(encrypted_pack_path)
         print("❌ This should not succeed!")
         
     except EncryptionError as e:
@@ -128,7 +128,7 @@ def demonstrate_encrypted_loading():
     # Try loading with wrong password (should fail)
     print("\n2️⃣ Attempting to load with wrong password...")
     try:
-        pack = RAGPack.load(encrypted_pack_path, decrypt_key="wrong_password")
+        pack = ragpackai.load(encrypted_pack_path, decrypt_key="wrong_password")
         print("❌ This should not succeed!")
         
     except Exception as e:
@@ -137,7 +137,7 @@ def demonstrate_encrypted_loading():
     # Load with correct password (should succeed)
     print("\n3️⃣ Loading with correct password...")
     try:
-        pack = RAGPack.load(encrypted_pack_path, decrypt_key=correct_password)
+        pack = ragpackai.load(encrypted_pack_path, decrypt_key=correct_password)
         print("✅ Successfully loaded encrypted pack!")
         
         # Test functionality
@@ -206,7 +206,7 @@ def demonstrate_encryption_performance():
     
     try:
         # Create pack
-        pack = RAGPack.from_files(
+        pack = ragpackai.from_files(
             files=document_files,
             embed_model="openai:text-embedding-3-small",
             name="performance_test"
@@ -255,7 +255,7 @@ def cleanup_example_files():
 
 def main():
     """Main example function."""
-    print("🔒 RAGPack Encryption Example")
+    print("🔒 ragpackai Encryption Example")
     print("=" * 50)
     
     # Check if cryptography is available

@@ -1,5 +1,5 @@
 """
-Storage module for RAGPack.
+Storage module for ragpackai.
 
 Handles saving and loading .rag files with optional AES-GCM encryption.
 A .rag file is a structured zip archive containing documents, vectorstore,

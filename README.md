@@ -1,8 +1,8 @@
-# RAGPack 📦
+# ragpackai 📦
 
 **Portable Retrieval-Augmented Generation Library**
 
-RAGPack is a Python library for creating, saving, loading, and querying portable RAG (Retrieval-Augmented Generation) packs. It allows you to bundle documents, embeddings, vectorstores, and configuration into a single `.rag` file that can be easily shared and deployed across different environments.
+ragpackai is a Python library for creating, saving, loading, and querying portable RAG (Retrieval-Augmented Generation) packs. It allows you to bundle documents, embeddings, vectorstores, and configuration into a single `.rag` file that can be easily shared and deployed across different environments.
 
 ## ✨ Features
 
@@ -20,22 +20,22 @@ RAGPack is a Python library for creating, saving, loading, and querying portable
 
 ```bash
 # Core installation
-pip install ragpack
+pip install ragpackai
 
 # With optional providers
-pip install ragpack[google]     # Google Vertex AI
-pip install ragpack[groq]       # Groq
-pip install ragpack[cerebras]   # Cerebras
-pip install ragpack[all]        # All providers
+pip install ragpackai[google]     # Google Vertex AI
+pip install ragpackai[groq]       # Groq
+pip install ragpackai[cerebras]   # Cerebras
+pip install ragpackai[all]        # All providers
 ```
 
 ### Basic Usage
 
 ```python
-from ragpack import RAGPack
+from ragpackai import ragpackai
 
 # Create a pack from documents
-pack = RAGPack.from_files([
+pack = ragpackai.from_files([
     "docs/manual.pdf", 
     "notes.txt",
     "knowledge_base/"
@@ -45,7 +45,7 @@ pack = RAGPack.from_files([
 pack.save("my_knowledge.rag")
 
 # Load and query
-pack = RAGPack.load("my_knowledge.rag")
+pack = ragpackai.load("my_knowledge.rag")
 
 # Simple retrieval (no LLM)
 results = pack.query("How do I install this?", top_k=3)
@@ -60,7 +60,7 @@ print(answer)
 
 ```python
 # Load with different providers
-pack = RAGPack.load(
+pack = ragpackai.load(
     "my_knowledge.rag",
     embedding_config={
         "provider": "google", 
@@ -81,10 +81,10 @@ answer = pack.ask("Explain the architecture")
 
 ```bash
 # From files and directories
-ragpack create docs/ notes.txt --output knowledge.rag
+ragpackai create docs/ notes.txt --output knowledge.rag
 
 # With custom settings
-ragpack create docs/ \
+ragpackai create docs/ \
   --embedding-provider openai \
   --embedding-model text-embedding-3-large \
   --chunk-size 1024 \
@@ -95,15 +95,15 @@ ragpack create docs/ \
 
 ```bash
 # Simple retrieval
-ragpack query knowledge.rag "How to install?"
+ragpackai query knowledge.rag "How to install?"
 
 # Question answering
-ragpack ask knowledge.rag "What are the requirements?" \
+ragpackai ask knowledge.rag "What are the requirements?" \
   --llm-provider openai \
   --llm-model gpt-4o
 
 # With provider overrides
-ragpack ask knowledge.rag "Explain the API" \
+ragpackai ask knowledge.rag "Explain the API" \
   --embedding-provider google \
   --embedding-model textembedding-gecko \
   --llm-provider groq \
@@ -113,7 +113,7 @@ ragpack ask knowledge.rag "Explain the API" \
 ### Pack Information
 
 ```bash
-ragpack info knowledge.rag
+ragpackai info knowledge.rag
 ```
 
 ## 🏗️ Architecture
@@ -149,9 +149,9 @@ mypack.rag
 
 ## 📖 API Reference
 
-### RAGPack Class
+### ragpackai Class
 
-#### `RAGPack.from_files(files, embed_model="openai:text-embedding-3-small", **kwargs)`
+#### `ragpackai.from_files(files, embed_model="openai:text-embedding-3-small", **kwargs)`
 
 Create a RAG pack from files.
 
@@ -162,7 +162,7 @@ Create a RAG pack from files.
 - `chunk_overlap`: Chunk overlap (default: 50)
 - `name`: Pack name
 
-#### `RAGPack.load(path, embedding_config=None, llm_config=None, **kwargs)`
+#### `ragpackai.load(path, embedding_config=None, llm_config=None, **kwargs)`
 
 Load a RAG pack from file.
 
@@ -189,8 +189,8 @@ Ask question with LLM.
 
 ```python
 # Direct provider access
-from ragpack.embeddings import OpenAI, HuggingFace, Google
-from ragpack.llms import OpenAIChat, GoogleChat, GroqChat
+from ragpackai.embeddings import OpenAI, HuggingFace, Google
+from ragpackai.llms import OpenAIChat, GoogleChat, GroqChat
 
 # Create embedding provider
 embeddings = OpenAI(model_name="text-embedding-3-large")
@@ -239,14 +239,14 @@ llm_config = {
 
 ### Encryption
 
-RAGPack supports AES-GCM encryption for sensitive data:
+ragpackai supports AES-GCM encryption for sensitive data:
 
 ```python
 # Save with encryption
 pack.save("sensitive.rag", encrypt_key="strong-password")
 
 # Load encrypted pack
-pack = RAGPack.load("sensitive.rag", decrypt_key="strong-password")
+pack = ragpackai.load("sensitive.rag", decrypt_key="strong-password")
 ```
 
 ### Best Practices
@@ -275,9 +275,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🆘 Support
 
-- 📖 [Documentation](https://aimldev726.github.io/ragpack/)
-- 🐛 [Issue Tracker](https://github.com/AIMLDev726/ragpack/issues)
-- 💬 [Discussions](https://github.com/AIMLDev726/ragpack/discussions)
+- 📖 [Documentation](https://aimldev726.github.io/ragpackai/)
+- 🐛 [Issue Tracker](https://github.com/AIMLDev726/ragpackai/issues)
+- 💬 [Discussions](https://github.com/AIMLDev726/ragpackai/discussions)
 
 ## 🙏 Acknowledgments
 

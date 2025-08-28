@@ -1,57 +1,57 @@
 """
-HuggingFace embedding wrapper for RAGPack.
+OpenAI embedding wrapper for ragpackai.
 
-Provides a convenient wrapper around HuggingFace embeddings with proper error handling
-and configuration management for offline/local embedding models.
+Provides a convenient wrapper around OpenAI embeddings with proper error handling
+and configuration management.
 """
 
 from typing import List, Optional, Dict, Any
+import os
 from ..providers import get_embedding_provider, ProviderError
 
 
-class HuggingFace:
+class OpenAI:
     """
-    HuggingFace embedding wrapper with lazy loading and error handling.
+    OpenAI embedding wrapper with lazy loading and error handling.
     
-    This class provides a convenient interface to HuggingFace embeddings,
-    particularly useful for offline scenarios or when using local models.
+    This class provides a convenient interface to OpenAI embeddings while
+    handling API key management and model configuration.
     
     Args:
-        model_name: HuggingFace model name (default: "all-MiniLM-L6-v2")
-        cache_folder: Directory to cache downloaded models (optional)
-        device: Device to run the model on ('cpu', 'cuda', etc.)
+        model_name: OpenAI embedding model name (default: "text-embedding-3-small")
+        api_key: OpenAI API key (optional, will use OPENAI_API_KEY env var)
         **kwargs: Additional arguments passed to the underlying embedding class
         
     Example:
-        >>> embeddings = HuggingFace(model_name="all-mpnet-base-v2")
+        >>> embeddings = OpenAI(model_name="text-embedding-3-large")
         >>> vectors = embeddings.embed_documents(["Hello world", "How are you?"])
     """
     
     def __init__(
         self, 
-        model_name: str = "all-MiniLM-L6-v2",
-        cache_folder: Optional[str] = None,
-        device: str = "cpu",
+        model_name: str = "text-embedding-3-small",
+        api_key: Optional[str] = None,
         **kwargs
     ):
         self.model_name = model_name
-        self.cache_folder = cache_folder
-        self.device = device
+        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         self.kwargs = kwargs
         self._embedding_instance = None
+        
+        if not self.api_key:
+            raise ProviderError(
+                "OpenAI API key not found. Please set OPENAI_API_KEY environment variable "
+                "or pass api_key parameter."
+            )
     
     @property
     def embedding_instance(self):
         """Lazy-loaded embedding instance."""
         if self._embedding_instance is None:
-            model_kwargs = {"device": self.device}
-            if self.cache_folder:
-                model_kwargs["cache_folder"] = self.cache_folder
-            
             self._embedding_instance = get_embedding_provider(
-                provider="huggingface",
+                provider="openai",
                 model_name=self.model_name,
-                model_kwargs=model_kwargs,
+                openai_api_key=self.api_key,
                 **self.kwargs
             )
         return self._embedding_instance
@@ -88,7 +88,7 @@ class HuggingFace:
             Number of dimensions in the embedding vectors
         """
         from ..providers import get_embedding_dimensions
-        dims = get_embedding_dimensions("huggingface", self.model_name)
+        dims = get_embedding_dimensions("openai", self.model_name)
         if dims is None:
             # Fallback: embed a test string to get dimensions
             test_embedding = self.embed_query("test")
@@ -96,4 +96,4 @@ class HuggingFace:
         return dims
     
     def __repr__(self) -> str:
-        return f"HuggingFace(model_name='{self.model_name}', device='{self.device}')"
+        return f"OpenAI(model_name='{self.model_name}')"

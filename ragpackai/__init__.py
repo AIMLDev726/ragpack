@@ -1,23 +1,23 @@
 """
-RAGPack - Portable Retrieval-Augmented Generation Library
+ragpackai - Portable Retrieval-Augmented Generation Library
 
 A Python library for creating, saving, loading, and querying portable RAG packs
 containing documents, embeddings, vectorstores, and configuration metadata.
 
 Example usage:
-    >>> from ragpack import RAGPack
+    >>> from ragpackai import ragpackai
     >>> 
     >>> # Create a pack from files
-    >>> pack = RAGPack.from_files(["doc1.txt", "doc2.pdf"])
+    >>> pack = ragpackai.from_files(["doc1.txt", "doc2.pdf"])
     >>> pack.save("my_pack.rag")
     >>> 
     >>> # Load and query
-    >>> pack = RAGPack.load("my_pack.rag")
+    >>> pack = ragpackai.load("my_pack.rag")
     >>> answer = pack.ask("What is this about?")
     >>> print(answer)
 """
 
-from .ragpack import RAGPack
+from .ragpackai import ragpackai
 from .pipeline import RAGPipeline
 from .providers import (
     ProviderError,
@@ -39,15 +39,15 @@ from . import embeddings
 from . import llms
 
 # Version information
-__version__ = "0.1.0"
-__author__ = "RAGPack Team"
-__email__ = "contact@ragpack.dev"
+__version__ = "0.1.1"
+__author__ = "ragpackai Team"
+__email__ = "contact@ragpackai.dev"
 __description__ = "Portable Retrieval-Augmented Generation Library"
 
 # Main exports
 __all__ = [
     # Core classes
-    "RAGPack",
+    "ragpackai",
     "RAGPipeline",
     
     # Provider functions
@@ -73,19 +73,19 @@ __all__ = [
 
 # Package metadata
 __package_info__ = {
-    "name": "ragpack",
+    "name": "ragpackai",
     "version": __version__,
     "description": __description__,
     "author": __author__,
     "author_email": __email__,
-    "url": "https://github.com/ragpack/ragpack",
+    "url": "https://github.com/ragpackai/ragpackai",
     "license": "MIT",
     "python_requires": ">=3.9",
 }
 
 
 def get_version() -> str:
-    """Get the current version of RAGPack."""
+    """Get the current version of ragpackai."""
     return __version__
 
 
@@ -95,33 +95,33 @@ def get_package_info() -> dict:
 
 
 # Convenience functions for quick access
-def create_pack(files, name="ragpack", **kwargs):
+def create_pack(files, name="ragpackai", **kwargs):
     """
-    Convenience function to create a RAGPack from files.
+    Convenience function to create a ragpackai from files.
     
     Args:
         files: List of file paths
         name: Pack name
-        **kwargs: Additional arguments for RAGPack.from_files()
+        **kwargs: Additional arguments for ragpackai.from_files()
         
     Returns:
-        RAGPack instance
+        ragpackai instance
     """
-    return RAGPack.from_files(files, name=name, **kwargs)
+    return ragpackai.from_files(files, name=name, **kwargs)
 
 
 def load_pack(path, **kwargs):
     """
-    Convenience function to load a RAGPack from file.
+    Convenience function to load a ragpackai from file.
     
     Args:
         path: Path to .rag file
-        **kwargs: Additional arguments for RAGPack.load()
+        **kwargs: Additional arguments for ragpackai.load()
         
     Returns:
-        RAGPack instance
+        ragpackai instance
     """
-    return RAGPack.load(path, **kwargs)
+    return ragpackai.load(path, **kwargs)
 
 
 # Add convenience functions to __all__
