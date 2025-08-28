@@ -39,7 +39,7 @@ from . import embeddings
 from . import llms
 
 # Version information
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 __author__ = "ragpackai Team"
 __email__ = "contact@ragpackai.dev"
 __description__ = "Portable Retrieval-Augmented Generation Library"
