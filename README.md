@@ -275,9 +275,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🆘 Support
 
-- 📖 [Documentation](https://ragpack.readthedocs.io/)
-- 🐛 [Issue Tracker](https://github.com/ragpack/ragpack/issues)
-- 💬 [Discussions](https://github.com/ragpack/ragpack/discussions)
+- 📖 [Documentation](https://AIMLDev726.readthedocs.io/)
+- 🐛 [Issue Tracker](https://github.com/AIMLDev726/ragpack/issues)
+- 💬 [Discussions](https://github.com/AIMLDev726/ragpack/discussions)
 
 ## 🙏 Acknowledgments
 
