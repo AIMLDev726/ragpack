@@ -1,0 +1,43 @@
+# Test requirements for RAGPack
+pytest>=7.0.0
+pytest-cov>=4.0.0
+pytest-mock>=3.10.0
+pytest-asyncio>=0.21.0
+python-dotenv>=1.0.0
+
+# Code quality tools
+black>=22.0.0
+flake8>=5.0.0
+mypy>=1.0.0
+isort>=5.12.0
+bandit>=1.7.0
+
+# Build and publish tools
+build>=0.8.0
+twine>=4.0.0
+pre-commit>=2.20.0
+
+# Core dependencies (for testing)
+langchain==0.2.12
+langchain-openai==0.1.20
+openai==1.40.0
+chromadb==0.5.5
+pydantic==2.8.2
+sentence-transformers==2.7.0
+faiss-cpu==1.8.0
+tqdm==4.66.4
+PyPDF2>=3.0.0
+cryptography>=3.4.8
+
+# Optional provider dependencies for testing
+langchain-google-genai
+groq
+langchain-groq
+cerebras-cloud-sdk
+langchain-cerebras
+langchain-nvidia-ai-endpoints
+
+# Documentation tools
+sphinx>=5.0.0
+sphinx-rtd-theme>=1.0.0
+myst-parser>=0.18.0
