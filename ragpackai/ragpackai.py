@@ -12,15 +12,30 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Union
-from tqdm import tqdm
 
-try:
-    from langchain.text_splitter import RecursiveCharacterTextSplitter
-    from langchain.schema import Document
-    from langchain_chroma import Chroma
-    from langchain_community.document_loaders import TextLoader, PyPDFLoader
-except ImportError as e:
-    raise ImportError(f"Required dependencies not installed: {e}")
+# Lazy imports to improve loading performance
+def _lazy_import_langchain():
+    """Lazy import of langchain components to improve startup time."""
+    try:
+        from langchain.text_splitter import RecursiveCharacterTextSplitter
+        from langchain.schema import Document
+        from langchain_chroma import Chroma
+        from langchain_community.document_loaders import TextLoader, PyPDFLoader
+        return RecursiveCharacterTextSplitter, Document, Chroma, TextLoader, PyPDFLoader
+    except ImportError as e:
+        raise ImportError(f"Required langchain dependencies not installed: {e}")
+
+def _lazy_import_tqdm():
+    """Lazy import of tqdm to improve startup time."""
+    try:
+        from tqdm import tqdm
+        return tqdm
+    except ImportError:
+        # Fallback to a simple progress indicator
+        def simple_progress(iterable, desc="Processing"):
+            print(f"{desc}...")
+            return iterable
+        return simple_progress
 
 from .providers import (
     get_embedding_provider, 
@@ -132,6 +147,10 @@ class ragpackai:
             },
             "vectorstore": "chroma"
         }
+        
+        # Lazy import heavy dependencies
+        RecursiveCharacterTextSplitter, Document, Chroma, TextLoader, PyPDFLoader = _lazy_import_langchain()
+        tqdm = _lazy_import_tqdm()
         
         # Load and process documents
         print(f"Loading {len(files)} files...")
@@ -270,6 +289,9 @@ class ragpackai:
         # Load vectorstore
         if os.path.exists(vectorstore_path):
             try:
+                # Lazy import Chroma
+                _, _, Chroma, _, _ = _lazy_import_langchain()
+                
                 # Create embedding provider
                 embedding_provider = get_embedding_provider(
                     final_embedding_config["provider"],
@@ -310,6 +332,9 @@ class ragpackai:
         """Rebuild vectorstore with new embedding configuration."""
         if not self.documents:
             raise ValueError("No documents available for reindexing")
+        
+        # Lazy import langchain components
+        RecursiveCharacterTextSplitter, Document, Chroma, _, _ = _lazy_import_langchain()
         
         # Recreate documents from stored content
         documents = []

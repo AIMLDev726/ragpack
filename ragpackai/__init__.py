@@ -39,9 +39,9 @@ from . import embeddings
 from . import llms
 
 # Version information
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __author__ = "ragpackai Team"
-__email__ = "contact@ragpackai.dev"
+__email__ = "aistudentlearn4@gmail.com"
 __description__ = "Portable Retrieval-Augmented Generation Library"
 
 # Main exports
@@ -157,6 +157,8 @@ def _check_dependencies():
         )
 
 
-# Run dependency check on import (optional)
-# Uncomment the next line if you want to check dependencies on import
-# _check_dependencies()
+# Lazy dependency checking - only check when explicitly called
+# This improves import performance by not checking dependencies on every import
+def check_dependencies():
+    """Manually check dependencies. Call this if you want to verify all dependencies are installed."""
+    _check_dependencies()
