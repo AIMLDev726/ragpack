@@ -19,14 +19,42 @@ ragpackai is a Python library for creating, saving, loading, and querying portab
 ### Installation
 
 ```bash
-# Core installation
+# Basic installation (minimal dependencies)
 pip install ragpackai
 
-# With optional providers
-pip install ragpackai[google]     # Google Vertex AI
-pip install ragpackai[groq]       # Groq
-pip install ragpackai[cerebras]   # Cerebras
-pip install ragpackai[all]        # All providers
+# Recommended for most users
+pip install ragpackai[standard]
+
+# Specific features
+pip install ragpackai[core]        # Core RAG functionality
+pip install ragpackai[openai]      # OpenAI integration
+pip install ragpackai[documents]   # PDF processing
+pip install ragpackai[embeddings]  # Sentence transformers
+
+# Provider-specific
+pip install ragpackai[google]      # Google/Gemini
+pip install ragpackai[groq]        # Groq
+pip install ragpackai[cerebras]    # Cerebras
+pip install ragpackai[nvidia]      # NVIDIA
+
+# Everything (may have installation issues on some systems)
+pip install ragpackai[all]
+```
+
+### 🚨 Installation Issues?
+
+If you encounter installation problems (especially with `faiss-cpu`):
+
+```bash
+# Try the standard installation first
+pip install ragpackai[standard]
+
+# For FAISS issues, use conda instead
+conda install -c conda-forge faiss-cpu
+pip install ragpackai[core,openai,documents,embeddings]
+
+# Get installation help
+python -c "import ragpackai; ragpackai.install_guide()"
 ```
 
 ### Basic Usage

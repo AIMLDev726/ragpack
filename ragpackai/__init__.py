@@ -39,7 +39,7 @@ from . import embeddings
 from . import llms
 
 # Version information
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 __author__ = "ragpackai Team"
 __email__ = "aistudentlearn4@gmail.com"
 __description__ = "Portable Retrieval-Augmented Generation Library"
@@ -128,37 +128,110 @@ def load_pack(path, **kwargs):
 __all__.extend(["create_pack", "load_pack", "get_version", "get_package_info"])
 
 
-# Optional: Check for common dependencies and warn if missing
+# Dependency checking with installation guidance
 def _check_dependencies():
     """Check for optional dependencies and provide helpful warnings."""
-    missing_deps = []
+    import warnings
     
+    # Core RAG functionality
     try:
         import langchain
-    except ImportError:
-        missing_deps.append("langchain")
-    
-    try:
         import chromadb
-    except ImportError:
-        missing_deps.append("chromadb")
+        import langchain_chroma
+    except ImportError as e:
+        warnings.warn(
+            f"Core RAG dependencies missing: {e}\n"
+            f"Install with: pip install ragpackai[core]",
+            ImportWarning
+        )
     
+    # LLM providers
     try:
         import openai
+        import langchain_openai
     except ImportError:
-        missing_deps.append("openai")
-    
-    if missing_deps:
-        import warnings
         warnings.warn(
-            f"Some core dependencies are missing: {', '.join(missing_deps)}. "
-            f"Install them with: pip install {' '.join(missing_deps)}",
+            "OpenAI dependencies missing. Install with: pip install ragpackai[openai]",
+            ImportWarning
+        )
+    
+    # Document processing
+    try:
+        import PyPDF2
+    except ImportError:
+        warnings.warn(
+            "PDF processing unavailable. Install with: pip install ragpackai[documents]",
+            ImportWarning
+        )
+    
+    # Embeddings
+    try:
+        import sentence_transformers
+    except ImportError:
+        warnings.warn(
+            "Sentence transformers unavailable. Install with: pip install ragpackai[embeddings]",
+            ImportWarning
+        )
+    
+    # FAISS (known to be problematic)
+    try:
+        import faiss
+    except ImportError:
+        warnings.warn(
+            "FAISS unavailable (this is common on some systems).\n"
+            f"Try: pip install ragpackai[faiss]\n"
+            f"If that fails, use: conda install -c conda-forge faiss-cpu\n"
+            f"FAISS is optional - ChromaDB works without it.",
             ImportWarning
         )
 
 
-# Lazy dependency checking - only check when explicitly called
-# This improves import performance by not checking dependencies on every import
 def check_dependencies():
-    """Manually check dependencies. Call this if you want to verify all dependencies are installed."""
+    """
+    Manually check dependencies and provide installation guidance.
+    
+    This function checks for optional dependencies and provides specific
+    installation commands for missing components.
+    """
     _check_dependencies()
+
+
+def install_guide():
+    """
+    Print installation guide for different use cases.
+    """
+    print("🚀 ragpackai Installation Guide")
+    print("=" * 40)
+    print()
+    print("📦 Basic installation (minimal dependencies):")
+    print("   pip install ragpackai")
+    print()
+    print("🔧 Common installations:")
+    print("   pip install ragpackai[standard]    # Most common use case")
+    print("   pip install ragpackai[core]        # Core RAG functionality")
+    print("   pip install ragpackai[openai]      # OpenAI integration")
+    print("   pip install ragpackai[documents]   # PDF processing")
+    print("   pip install ragpackai[embeddings]  # Sentence transformers")
+    print()
+    print("🏢 Provider-specific:")
+    print("   pip install ragpackai[google]      # Google/Gemini")
+    print("   pip install ragpackai[groq]        # Groq")
+    print("   pip install ragpackai[cerebras]    # Cerebras")
+    print("   pip install ragpackai[nvidia]      # NVIDIA")
+    print()
+    print("⚠️  Problematic dependencies:")
+    print("   pip install ragpackai[faiss]       # May fail on some systems")
+    print("   conda install -c conda-forge faiss-cpu  # Alternative for FAISS")
+    print()
+    print("🎯 Everything (may have issues):")
+    print("   pip install ragpackai[all]")
+    print()
+    print("💡 If you encounter installation issues:")
+    print("   1. Start with: pip install ragpackai[standard]")
+    print("   2. Add specific providers as needed")
+    print("   3. Skip FAISS if it fails to install")
+    print("   4. Use conda for problematic packages")
+
+
+# Add new functions to exports
+__all__.extend(["check_dependencies", "install_guide"])
